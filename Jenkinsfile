@@ -16,7 +16,7 @@ pipeline {
 
         stage('Install') {
             tools {
-                nodejs 'node-20'
+                nodejs 'node'
             }
             steps {
                 sh 'npm ci'
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Test') {
             tools {
-                nodejs 'node-20'
+                nodejs 'node'
             }
             steps {
                 sh 'npm test'

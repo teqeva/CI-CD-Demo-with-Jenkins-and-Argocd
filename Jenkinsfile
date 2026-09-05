@@ -19,7 +19,7 @@ pipeline {
                 nodejs 'node'
             }
             steps {
-                sh 'npm ci'
+                sh 'npm install'
             }
         }
 

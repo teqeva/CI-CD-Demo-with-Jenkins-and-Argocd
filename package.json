@@ -1,0 +1,8 @@
+{
+  "name": "week10-cicd-jenkins-argocd",
+  "version": "1.0.0",
+  "description": "Starter project for Week 10 CI/CD project",
+  "scripts": {
+    "test": "node tests/site.test.js"
+  }
+}

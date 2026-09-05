@@ -8,7 +8,7 @@ function assert(condition, message) {
 
 const html = fs.readFileSync('index.html', 'utf8');
 
-assert(html.includes('<title>WEEK 10 CI/CD Demo</title>'), 'Missing expected title');
+assert(html.includes('<title>Week 10 CI/CD Demo</title>'), 'Missing expected title');
 assert(html.includes('Jenkins + ArgoCD'), 'Missing expected CI/CD description text');
 assert(html.includes('Kubernetes'), 'Missing expected platform reference');
 

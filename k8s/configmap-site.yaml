@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: site-content
+  namespace: week10-cicd
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Week 10 CI/CD Demo</title>
+      <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+      <main class="container">
+        <h1>Week 10 CI/CD Demo</h1>
+        <p>This website is deployed using Jenkins + ArgoCD.</p>
+        <ul>
+          <li>CI: Jenkins pipeline</li>
+          <li>CD: ArgoCD GitOps sync</li>
+          <li>Platform: Kubernetes</li>
+        </ul>
+      </main>
+    </body>
+    </html>
+  styles.css: |
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6f8fb;
+      color: #1f2937;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 4rem auto;
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      margin-top: 0;
+    }

@@ -3,11 +3,12 @@ kind: Service
 metadata:
   name: week10-website
   namespace: week10-cicd
+  labels:
+    app: week10-website
 spec:
-  type: NodePort
   selector:
     app: week10-website
   ports:
-    - port: 80
-      targetPort: 80
-      nodePort: 30080
+  - port: 80
+    targetPort: 80
+  type: NodePort

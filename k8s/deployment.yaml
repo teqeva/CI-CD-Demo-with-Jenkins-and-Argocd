@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: week10-website
+  namespace: week10-cicd
+  labels:
+    app: week10-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: week10-website
+  template:
+    metadata:
+      labels:
+        app: week10-website
+    spec:
+      containers:
+        - name: website
+          image: teqiee/week10-cicd-jenkins-argocd:latest
+          ports:
+            - containerPort: 80

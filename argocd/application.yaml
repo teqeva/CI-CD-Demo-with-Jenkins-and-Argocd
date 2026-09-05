@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: week10-cicd-demo
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/teqeva/CI-CD-Demo-with-Jenkins-and-Argocd.git
+    targetRevision: HEAD
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: week10-cicd
+  # syncPolicy:
+  #   automated:
+  #     prune: true
+  #     selfHeal: true

@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: "https://github.com/teqeva/week10-cicd-jenkins-argocd", branch: "main"
+                git url: "https://github.com/teqeva/CI-CD-Demo-with-Jenkins-and-Argocd", branch: "main"
             }
         }
 

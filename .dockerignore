@@ -1,0 +1,28 @@
+# Git
+.git/
+.gitignore
+
+# Node
+node_modules/
+npm-debug.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# CI/CD
+Jenkinsfile
+k8s/
+argocd/
+docs/
+README.md
+
+# Docker
+Dockerfile
+.dockerignore

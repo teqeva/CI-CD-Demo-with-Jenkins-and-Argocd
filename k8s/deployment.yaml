@@ -6,7 +6,7 @@ metadata:
   labels:
     app: week10-website
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: week10-website

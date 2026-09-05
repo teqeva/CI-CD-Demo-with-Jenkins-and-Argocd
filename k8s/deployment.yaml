@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: week10-website
+  namespace: week10-cicd
+  labels:
+    app: week10-website
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: week10-website
+  template:
+    metadata:
+      labels:
+        app: week10-website
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: site-content
+          mountPath: /usr/share/nginx/html
+          readOnly: true
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+      volumes:
+      - name: site-content
+        configMap:
+          name: site-config

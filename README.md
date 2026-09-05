@@ -1,5 +1,4 @@
 # Week 10 CI/CD Demo: Jenkins + ArgoCD
-
 A small static website deployed through a full Git-tracked CI/CD workflow: **Jenkins** builds, tests, and pushes a Docker image; **ArgoCD** deploys it to Kubernetes using Git as the single source of truth.
 
 ---
@@ -159,37 +158,53 @@ Here's exactly how that plays out in this project:
    kubectl rollout restart deployment/week10-website -n week10-cicd
 ```
  
-9. **Verifying a sync actually happened:** the **History and Rollback** tab in the ArgoCD UI lists every sync as a separate entry, each tagged with the Git revision hash and commit message it deployed. A genuine new content update will show as a new entry with a different revision hash than the previous one.
+9. **Verifying a sync actually happened:** the **History and Rollback** tab in the ArgoCD UI lists every sync as a separate entry, each tagged with the Git revision hash and commit message it deployed.
+    
 ---
-Verifying a sync actually happened: the History and Rollback tab in the ArgoCD UI lists every sync as a separate entry, each tagged with the Git revision hash and commit message it deployed.
 
 ## SCREENSHOTS WITH CAPTIONS
 ---
 
-1. ![alt text](docs/screenshots/01.0-jenkins-success.png) 
-   ![alt text](docs/screenshots/01.1-jenkins-success.png)
-| `docs/screenshots/01.0-jenkins-success.png` | Jenkins pipeline completing all stages successfully
+1.   `docs/screenshots/01.0-jenkins-success.png` Jenkins pipeline completing all stages successfully
+---
+
+   <img width="1913" height="1000" alt="01 1-jenkins-success" src="https://github.com/user-attachments/assets/2afca7ac-b57b-48a8-9f8a-fb02382c0325" />
+
 
 ---
 
-2. ![alt text](docs/screenshots/02-jenkins-failure.png) 
-| `docs/screenshots/02-jenkins-failure.png` | Jenkins pipeline failing at the Test stage after an intentional test break 
+2.  `docs/screenshots/02-jenkins-failure.png` Jenkins pipeline failing at the Test stage after an intentional test break
+---
+
+   <img width="1913" height="1000" alt="02-jenkins-failure" src="https://github.com/user-attachments/assets/3662fc3e-cbb5-4155-845a-0530feb05620" />
+ 
+---
+
+3. `docs/screenshots/03.0-argocd-synced.png` | ArgoCD application showing `Synced` + `Healthy` status
+---
+
+   <img width="1920" height="998" alt="03 0-argocd-synced" src="https://github.com/user-attachments/assets/2e02f4d2-88df-4a1a-a667-04d0b10d53a1" />
+
+   <img width="1920" height="1011" alt="03 1-argocd-v1-site" src="https://github.com/user-attachments/assets/ab586c8f-74f2-45ad-9add-f4554061b2f0" />
 
 ---
 
-3. ![alt text](docs/screenshots/03.0-argocd-synced.png)
-   ![alt text](docs/screenshots/03.1-argocd-v1-site.png)
-| `docs/screenshots/03.0-argocd-synced.png` | ArgoCD application showing `Synced` + `Healthy` status 
+4.  `docs/screenshots/04.0-argocd-history.png`  ArgoCD sync history showing a new deployment triggered by a Git commit 
+---
+
+   <img width="1920" height="1005" alt="04 0-argocd-history" src="https://github.com/user-attachments/assets/8eea8770-a895-41d7-b398-dd989c07b965" />
+
 
 ---
 
-4. ![alt text](docs/screenshots/04.0-argocd-history.png)
-| `docs/screenshots/04.0-argocd-history.png` | ArgoCD sync history showing a new deployment triggered by a Git commit 
 
-5. ![alt text](docs/screenshots/05.0-argocd-after-changes.png)
-   ![alt text](docs/screenshots/05.1-argocd-v2-site.png)
-| `docs/screenshots/05.1-argocd-after-changes.png` | Deployment of v2 of the site with updated replicas as 3
+6.  `docs/screenshots/05.1-argocd-after-changes.png`  Deployment of v2 of the site with updated replicas as 3
+---
 
+   <img width="1920" height="1007" alt="05 0-argocd-after-changes" src="https://github.com/user-attachments/assets/524a3eae-8cee-4f19-b1bd-a9fbbdea24b9" />
+
+   <img width="1920" height="1007" alt="05 1-argocd-v2-site" src="https://github.com/user-attachments/assets/def46c3c-c1e2-4c25-bcca-4b9fea38dfc4" />
+   
 ---
 
 ## Repository
@@ -200,9 +215,12 @@ Verifying a sync actually happened: the History and Rollback tab in the ArgoCD U
 
 ## Troubleshooting Notes & Lessons Learned
 
-- **`libatomic.so.1` missing on the Jenkins agent** — the official Jenkins Docker image doesn't ship this library, but Node.js needs it. Fixed by shelling into the container as root (`docker exec -u root -it <container> bash`) and running `apt-get install -y libatomic1`. For a permanent fix, this should live in a custom Jenkins image via a `Dockerfile` extending `jenkins/jenkins:lts`, since the fix disappears if the container is recreated.
+- **`libatomic.so.1` missing on the Jenkins agent** - the official Jenkins Docker image doesn't ship this library, but Node.js needs it. Fixed by shelling into the container as root (`docker exec -u root -it <container> bash`) and running `apt-get install -y libatomic1`. For a permanent fix, this should live in a custom Jenkins image via a `Dockerfile` extending `jenkins/jenkins:lts`, since the fix disappears if the container is recreated.
+  
 ---
-- **Trivy install via apt failing** — the Aqua Security apt repo had a broken/unverifiable signing key at the time of this project. Installed Trivy directly via its official install script instead of apt.
+- **Trivy install via apt failing** - the Aqua Security apt repo had a broken/unverifiable signing key at the time of this project. Installed Trivy directly via its official install script instead of apt.
+  
 ---
-- **`.gitignore` accidentally excluding required project files** — a starter `.gitignore` template listed `Dockerfile`, `Jenkinsfile`, `k8s/`, and `argocd/`, all of which this project explicitly requires to be committed. Removed those entries.
+- **`.gitignore` accidentally excluding required project files** - a starter `.gitignore` template listed `Dockerfile`, `Jenkinsfile`, `k8s/`, and `argocd/`, all of which this project explicitly requires to be committed. Removed those entries.
+
 ---

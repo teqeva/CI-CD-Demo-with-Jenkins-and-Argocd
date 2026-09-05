@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: "https://github.com/teqeva/CI-CD-Demo-with-Jenkins-and-Argocd", branch: "main"
+                git url: "https://github.com/YOUR-USERNAME/week10-cicd-jenkins-argocd", branch: "main"
             }
         }
 
@@ -48,25 +48,17 @@ pipeline {
 
         stage('Security Scan - Trivy') {
             steps {
-                sh 'trivy fs . --severity HIGH,CRITICAL --exit-code 0 --timeout 20m'
+                sh 'trivy fs . --severity HIGH,CRITICAL --exit-code 0 --timeout 15m'
             }
         }
     }
 
     post {
         success {
-            emailext(
-                subject: "SUCCESS: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                body: "Build successful! View details: ${env.BUILD_URL}",
-                to: 'evaamuthoni@gmail.com'
-            )
+            echo "Build #${env.BUILD_NUMBER} succeeded. View details: ${env.BUILD_URL}"
         }
         failure {
-            emailext(
-                subject: "FAILED: ${env.JOB_NAME} - Build #${env.BUILD_NUMBER}",
-                body: "Build failed! Check logs: ${env.BUILD_URL}console",
-                to: 'evaamuthoni@gmail.com'
-            )
+            echo "Build #${env.BUILD_NUMBER} failed. Check logs: ${env.BUILD_URL}console"
         }
     }
 }

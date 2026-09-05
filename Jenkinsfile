@@ -48,7 +48,7 @@ pipeline {
 
         stage('Security Scan - Trivy') {
             steps {
-                sh 'trivy fs . --severity HIGH,CRITICAL --exit-code 0'
+                sh 'trivy fs . --severity HIGH,CRITICAL --exit-code 0 ---timeout 20m'
             }
         }
     }
